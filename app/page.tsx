@@ -17,6 +17,7 @@ const awsTasks = [
     description: "Launch and configure an EC2 instance with security groups and key pairs",
     service: "EC2",
     difficulty: "Beginner",
+    images: ["/images/ec2-1.png", "/images/ec2-2.png", "/images/ec2-3.png"]
   },
   {
     id: "s3",
@@ -24,6 +25,7 @@ const awsTasks = [
     description: "Set up and manage S3 buckets and permissions",
     service: "S3",
     difficulty: "Beginner",
+    images: ["/images/s3-1.png", "/images/s3-2.png", "/images/s3-3.png"]
   },
   {
     id: "lambda",
@@ -31,6 +33,7 @@ const awsTasks = [
     description: "Create and deploy serverless functions",
     service: "Lambda",
     difficulty: "Intermediate",
+    images: ["/images/lambda-1.png", "/images/lambda-2.png", "/images/lambda-3.png"]
   },
   {
     id: "vpc",
@@ -38,6 +41,7 @@ const awsTasks = [
     description: "Create and configure a Virtual Private Cloud",
     service: "VPC",
     difficulty: "Intermediate",
+    images: ["/images/vpc-1.png", "/images/vpc-2.png", "/images/vpc-3.png"]
   },
   {
     id: "rds",
@@ -45,6 +49,7 @@ const awsTasks = [
     description: "Launch a managed relational database using Amazon RDS",
     service: "RDS",
     difficulty: "Intermediate",
+    images: ["/images/rds-1.png", "/images/rds-2.png", "/images/rds-3.png"]
   },
   {
     id: "cloudformation",
@@ -52,6 +57,7 @@ const awsTasks = [
     description: "Create infrastructure as code using CloudFormation templates",
     service: "CloudFormation",
     difficulty: "Advanced",
+    images: ["/images/cloudformation-1.png", "/images/cloudformation-2.png", "/images/cloudformation-3.png"]
   },
   {
     id: "cloudwatch",
@@ -59,7 +65,8 @@ const awsTasks = [
     description: "Monitor AWS resources using metrics and alarms",
     service: "CloudWatch",
     difficulty: "Intermediate",
-  },
+    images: ["/images/cloudwatch-1.png", "/images/cloudwatch-2.png", "/images/cloudwatch-3.png"]
+  }
 ]
 
 const getDifficultyColor = (difficulty: string) => {
@@ -77,6 +84,7 @@ const getDifficultyColor = (difficulty: string) => {
 
 export default function AWSTaskDashboard() {
   const [selectedTask, setSelectedTask] = useState<(typeof awsTasks)[0] | null>(null)
+  const [selectedScreenshotIdx, setSelectedScreenshotIdx] = useState<number>(0)
 
   const handleDownload = (taskId: string, screenshotIndex?: number) => {
     console.log(`Downloading resources for ${taskId} screenshot ${screenshotIndex ?? ''}`)
@@ -102,21 +110,21 @@ export default function AWSTaskDashboard() {
               <p className="text-gray-400 font-mono text-md">{task.description}</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((screenshotIdx) => (
+                {task.images.map((imageSrc, screenshotIdx) => (
                   <Card key={screenshotIdx} className="bg-gray-900/50 border border-gray-700 hover:border-blue-500">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between mb-2">
                         <Badge variant="outline" className={`font-mono text-xs ${getDifficultyColor(task.difficulty)}`}>{task.difficulty}</Badge>
                         <Badge variant="secondary" className="font-mono text-xs bg-gray-800 text-gray-300">{task.service}</Badge>
                       </div>
-                      <CardTitle className="text-lg font-mono text-gray-100">Screenshot {screenshotIdx}</CardTitle>
+                      <CardTitle className="text-lg font-mono text-gray-100">Screenshot {screenshotIdx + 1}</CardTitle>
                     </CardHeader>
 
                     <CardContent className="space-y-4">
                       <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden border border-gray-700">
                         <Image
-                          src={`/placeholder.svg?height=200&width=300&text=${task.service}+Screenshot+${screenshotIdx}`}
-                          alt={`${task.title} Screenshot ${screenshotIdx}`}
+                          src={imageSrc}
+                          alt={`${task.title} Screenshot ${screenshotIdx + 1}`}
                           fill
                           className="object-cover opacity-80 hover:opacity-100"
                         />
@@ -129,7 +137,10 @@ export default function AWSTaskDashboard() {
                               variant="outline"
                               size="sm"
                               className="flex-1 font-mono border-gray-600 hover:border-blue-500 hover:text-blue-400"
-                              onClick={() => setSelectedTask(task)}
+                              onClick={() => {
+                                setSelectedTask(task)
+                                setSelectedScreenshotIdx(screenshotIdx)
+                              }}
                             >
                               <Eye className="w-4 h-4 mr-2" /> Preview
                             </Button>
@@ -137,13 +148,13 @@ export default function AWSTaskDashboard() {
                           <DialogContent className="bg-gray-900 border-gray-700 max-w-4xl">
                             <DialogHeader>
                               <DialogTitle className="font-mono text-green-400">
-                                {selectedTask?.title} - Screenshot {screenshotIdx}
+                                {selectedTask?.title} - Screenshot {selectedScreenshotIdx + 1}
                               </DialogTitle>
                             </DialogHeader>
                             <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
                               <Image
-                                src={`/placeholder.svg?height=600&width=800&text=${selectedTask?.service}+Screenshot+${screenshotIdx}`}
-                                alt={`${selectedTask?.title} Screenshot ${screenshotIdx}`}
+                                src={selectedTask?.images[selectedScreenshotIdx] || ''}
+                                alt={`${selectedTask?.title} Screenshot ${selectedScreenshotIdx + 1}`}
                                 width={800}
                                 height={600}
                                 className="w-full h-full object-cover"
@@ -155,7 +166,7 @@ export default function AWSTaskDashboard() {
                         <Button
                           size="sm"
                           className="flex-1 font-mono bg-green-600 hover:bg-green-700"
-                          onClick={() => handleDownload(task.id, screenshotIdx)}
+                          onClick={() => handleDownload(task.id, screenshotIdx + 1)}
                         >
                           <Download className="w-4 h-4 mr-2" /> Download
                         </Button>

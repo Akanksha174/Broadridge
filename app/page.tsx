@@ -13,7 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 const awsTasks = [
   {
     id: "ec2",
-    title: "Amazon EC2 Task",
+    title: "AWS EC2 instance",
     description: "Launch and configure an EC2 instance with security groups and key pairs",
     service: "EC2",
     difficulty: "Beginner",
@@ -21,51 +21,27 @@ const awsTasks = [
   },
   {
     id: "s3",
-    title: "Amazon S3 Task",
+    title: "Secure Ubuntu EC2 instance",
     description: "Set up and manage S3 buckets and permissions",
     service: "S3",
     difficulty: "Beginner",
     images: ["/images/s3-1.png", "/images/s3-2.png", "/images/s3-3.png"]
   },
   {
-    id: "lambda",
-    title: "AWS Lambda Task",
-    description: "Create and deploy serverless functions",
-    service: "Lambda",
-    difficulty: "Intermediate",
-    images: ["/images/lambda-1.png", "/images/lambda-2.png", "/images/lambda-3.png"]
-  },
-  {
     id: "vpc",
-    title: "Amazon VPC Task",
+    title: "Amazon VPC",
     description: "Create and configure a Virtual Private Cloud",
     service: "VPC",
     difficulty: "Intermediate",
     images: ["/images/vpc-1.png", "/images/vpc-2.png", "/images/vpc-3.png"]
   },
   {
-    id: "rds",
-    title: "Amazon RDS Task",
-    description: "Launch a managed relational database using Amazon RDS",
-    service: "RDS",
+    id: "lambda",
+    title: "Amazon Lambda",
+    description: "Create and deploy serverless functions",
+    service: "Lambda",
     difficulty: "Intermediate",
-    images: ["/images/rds-1.png", "/images/rds-2.png", "/images/rds-3.png"]
-  },
-  {
-    id: "cloudformation",
-    title: "AWS CloudFormation Task",
-    description: "Create infrastructure as code using CloudFormation templates",
-    service: "CloudFormation",
-    difficulty: "Advanced",
-    images: ["/images/cloudformation-1.png", "/images/cloudformation-2.png", "/images/cloudformation-3.png"]
-  },
-  {
-    id: "cloudwatch",
-    title: "Amazon CloudWatch Task",
-    description: "Monitor AWS resources using metrics and alarms",
-    service: "CloudWatch",
-    difficulty: "Intermediate",
-    images: ["/images/cloudwatch-1.png", "/images/cloudwatch-2.png", "/images/cloudwatch-3.png"]
+    images: ["/images/lambda-1.png", "/images/lambda-2.png", "/images/lambda-3.png"]
   }
 ]
 
